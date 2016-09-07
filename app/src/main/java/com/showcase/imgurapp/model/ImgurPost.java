@@ -1,6 +1,7 @@
 package com.showcase.imgurapp.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.showcase.imgurapp.Constants;
 
 public class ImgurPost {
 
@@ -67,14 +68,6 @@ public class ImgurPost {
     @SerializedName("is_ad")
     private boolean isAd;
 
-    public String getLink() {
-        return link;
-    }
-
-    public boolean isAlbum() {
-        return isAlbum;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -83,16 +76,25 @@ public class ImgurPost {
         return points;
     }
 
-    public int getWidth() {
+    public String getImageLink() {
+        if (isAlbum && cover != null) {
+            return Constants.IMAGE_BASE_URL.concat(cover).concat(".jpg");
+        }
+        return link;
+    }
+
+    public int getImageWidth() {
+        if (isAlbum && cover != null) {
+            return coverWidth;
+        }
         return width;
     }
 
-    public int getHeight() {
+    public int getImageHeight() {
+        if (isAlbum && cover != null) {
+            return coverHeight;
+        }
         return height;
-    }
-
-    public String getType() {
-        return type;
     }
 
     @Override

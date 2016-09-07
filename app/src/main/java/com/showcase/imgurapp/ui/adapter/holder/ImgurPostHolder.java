@@ -41,8 +41,7 @@ public class ImgurPostHolder extends RecyclerView.ViewHolder {
         mTextTitle.setText(imgurPost.getTitle());
         mTextPoints.setText(String.format(Locale.getDefault(), "%,d%s", imgurPost.getPoints(),
                 context.getString(R.string._points)));
-        Timber.d("%dx%d %s %s", imgurPost.getWidth(), imgurPost.getHeight(),
-                imgurPost.getType(), imgurPost.getTitle());
+        Timber.d("%dx%d %s", imgurPost.getImageWidth(), imgurPost.getImageHeight(), imgurPost.getTitle());
         if (IMAGE_WIDTH > 0) {
             // if IMAGE_WIDTH has positive value, set the image view size before it's created
             displayImage(context, imgurPost, IMAGE_WIDTH);
@@ -66,8 +65,8 @@ public class ImgurPostHolder extends RecyclerView.ViewHolder {
     private void displayImage(Context context, ImgurPost imgurPost, int width) {
         // set the proper height that fits the image aspect ratio
         int height;
-        if (imgurPost.getHeight() > 0 && imgurPost.getWidth() > 0) {
-            height = (int) (width * ((double) imgurPost.getHeight() / ((double) imgurPost.getWidth())));
+        if (imgurPost.getImageHeight() > 0 && imgurPost.getImageWidth() > 0) {
+            height = (int) (width * ((double) imgurPost.getImageHeight() / ((double) imgurPost.getImageWidth())));
         } else {
             height = width;
         }
@@ -87,13 +86,13 @@ public class ImgurPostHolder extends RecyclerView.ViewHolder {
                 Timber.d("%dx%d %d", width, height, screenWidth);
             }
             Picasso.with(context)
-                    .load(imgurPost.getLink())
+                    .load(imgurPost.getImageLink())
                     .config(Bitmap.Config.RGB_565)
                     .resize(width, height)
                     .into(mImageView);
         } else {
             Picasso.with(context)
-                    .load(imgurPost.getLink())
+                    .load(imgurPost.getImageLink())
                     .config(Bitmap.Config.RGB_565)
                     .fit()
                     .into(mImageView);
