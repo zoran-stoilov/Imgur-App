@@ -88,7 +88,14 @@ public class MainFragment extends Fragment implements
             if (mPage == 0) {
                 posts.clear();
             }
-            posts.addAll(event.getPosts());
+            // prevent from duplicating posts - do not add post if there's another one with the same ID in the list
+            for (ImgurPost post : event.getPosts()) {
+                if (posts.contains(post)) {
+                    Timber.d("duplicate found ID:%s %s", post.getId(), post.getTitle());
+                } else {
+                    posts.add(post);
+                }
+            }
             mPage++;
         }
         galleryAdapter.notifyDataSetChanged();

@@ -68,6 +68,10 @@ public class ImgurPost {
     @SerializedName("is_ad")
     private boolean isAd;
 
+    public String getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -122,5 +126,14 @@ public class ImgurPost {
                 ", section='" + section + '\'' +
                 ", commentCount=" + commentCount +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        // compare by ID only
+        if (obj instanceof ImgurPost) {
+            return id.equals(((ImgurPost) obj).getId());
+        }
+        return false;
     }
 }
